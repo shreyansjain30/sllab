@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Reg Form - Server Side Validation Using Python</title>
+		<script type="text/javascript">
+			function validate() {
+				var USN = document.getElementById('usn').value;
+				var marksArray = document.getElementsByName('marks[]');
+				var creditsArray = document.getElementsByName('credits[]');
+
+				if(!validateUSN(USN)){
+					alert("Invalid USN Format");
+					return false;
+				}if(!validateMarks(marksArray)){
+					alert("Invalid marks. Should be between 0 and 100");
+					return false;
+				}
+				if(!validateCredits(creditsArray)){
+					alert("Invalid credits. Should be between 1 and 4");
+					return false;
+				}
+				return true;
+			}
+			function validateUSN(strUSN){
+				return /\d[a-zA-Z]\w{1}\d{2}[a-zA-Z]\w{1}\d{3}$/.test(strUSN);
+			}
+
+			function validateMarks(marksArray){
+				for (var i = 0; i < marksArray.length; i++) {
+					var marks = parseInt(marksArray[i].value);
+					console.log(marks);
+					if(marks < 0 || marks > 100){
+						return false;
+					}
+				}
+				return true;
+			}
+
+			function validateCredits(creditsArray){
+				for (var i = 0; i < creditsArray.length; i++) {
+					var credits = parseInt(creditsArray[i].value);
+					console.log(credits);
+					if(credits < 1 || credits > 4){
+						return false;
+					}
+				}
+				return true;
+			}
+
+		</script>
+	</head>
+	<body>
+
+		<h1>Fill Your Registeration - - Server Side Validation Using Python</h1>
+
+		<!-- Form for details -->
+		<form action="{{url_for('Stud')}}" method="POST" onsubmit="return validate()" id="RegForm">  
+			Name : <input id = "name" name = "name" type="text" required/><br>
+			USN (Eg. 1MS14IS001) : <input id = "usn" name = "usn" type="text" required/><br>
+			D.O.B (Eg. dd/mm/yyyy) : <input id = "dob" type="date" name = "dob" min="1992-01-01" max="1998-12-31" required/><br>
+			Subject 1 : <input name = "marks[]" type="number" placeholder="marks (0-100)" required/><input name = "credits[]" type="number" placeholder="credits" required/><br>
+			Subject 2 : <input name = "marks[]" type="number" placeholder="marks (0-100)" required/><input name = "credits[]" type="number" placeholder="credits" required/><br>
+			Subject 3 : <input name = "marks[]" type="number" placeholder="marks (0-100)" required/><input name = "credits[]" type="number" placeholder="credits" required/><br>
+			Subject 4 : <input name = "marks[]" type="number" placeholder="marks (0-100)" required/><input name = "credits[]" type="number" placeholder="credits" required/><br>
+			Subject 5 : <input name = "marks[]" type="number" placeholder="marks (0-100)" required/><input name = "credits[]" type="number" placeholder="credits" required/><br><br>
+			<button type="submit">Submit</button>
+		</form>
+
+ </body>
+</html>
